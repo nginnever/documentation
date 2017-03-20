@@ -9,7 +9,7 @@ add Storj.js, and a div to put our images in:
 ```html
 <body>
   <div id="imagesGoHere"></div>
-  <script source="./storj.es6.js"></script>
+  <script src="./storj.es6.js"></script>
 </body>
 ```
 
@@ -90,7 +90,7 @@ We're gonna stick this in our html page from earlier:
 ```html
 <body>
   <div id="imagesGoHere"></div>
-  <script source="./storj.es6.js"></script>
+  <script src="./storj.es6.js"></script>
   <script type="text/javascript">
     var storj = new Storj()
     var fileList = storj.getFileList(bucketID)
@@ -149,7 +149,7 @@ storj.createBucket('Image Gallery Tutorial', function (e, bucket) {
 <!-- This is the browser page that displays the photos. -->
 <body>
   <div id="imagesGoHere"></div>
-  <script source="./storj.es6.js"></script>
+  <script src="./storj.es6.js"></script>
   <script type="text/javascript">
     var storj = new Storj()
     var fileList = storj.getFileList(bucketID)
