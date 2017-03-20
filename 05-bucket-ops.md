@@ -19,6 +19,7 @@ storj.getBucketList(function (error, metadata) {
     console.log('Bucket storage in GB', item.storage)
     console.log('Bucket transfer in GB', item.transfer)
     console.log('Bucket created date', item.created)
+    console.log('Bucket public permissions', item.publicPermissions)
     item.pubkeys.forEach(function (key) {
       console.log('A key:', key)
     })
