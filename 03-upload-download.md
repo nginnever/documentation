@@ -21,7 +21,7 @@ other aspects of a user account.
 In order to work with files however, you will need a key to encrypt/decrypt the
 file itself. This is where the encryption key comes in. As you can see in the
 example above, you can generate a new encryption key by calling
-`Storj.generateEncryptionKey()`. This key is in the format of a friendly
+`Storj.generateEncryptionKey()`. This key formatted as a human-friendly
 mnemonic, 12-24 words long!
 
 ```
@@ -143,16 +143,12 @@ download.getBuffer(function (error, buffer) {
 })
 ```
 
-`getBuffer()` calls back when the file is completely downloaded. But what if we
-want access to data as it comes in?
+`getBuffer()` calls back when the file is completely downloaded.
+
+`Buffer`s are cool and all, but I like streams:
 
 ```javascript
 var downStream = download.createReadStream()
-
-downStream.on('data', function (data) {
-  console.log('bytes downloaded:', file.length)
-  doTheThingWithThe(data)
-})
 
 downStream.on("end", function() {
   console.log('Stream over.')
@@ -181,7 +177,7 @@ var Storj = require('storj')
 var fs = require('fs')
 
 // Instantiate a new Storj object with your private key
-var storj = new Storj({key: privateKey, mnemonic: mnemonic})
+var storj = new Storj({key: privateKey, encryptionKey: encryptionKey})
 var data = fs.readFileSync('/path/to/file/cat.jpg',)
 
 var file = storj.createFile(bucketId, 'cat.jpg', data)
@@ -200,7 +196,8 @@ file.on('done', fucntion () {
     console.log("type:", download.mimetype)
     console.log("size in bytes:", download.length)
     console.log("upload/download progress:", download.progress)
-    console.log("uploaded/downloaded bytes:", download.progress * download.length)
+    console.log("uploaded/downloaded bytes:",
+      download.progress * download.length)
     var downStream = download.createReadStream()
     var catFile = fs.createWriteStream('./cat2.jpg')
     downStream.pipe(catFile)
@@ -216,7 +213,7 @@ Browser:
   <input type="file" id="input" onchange="upload()">
   <script>
   var encryptionKey = Storj.generateEncryptionKey()
-  var storj = new Storj({ key, encryptionKey })
+  var storj = new Storj({key: privateKey, encryptionKey: encryptionKey})
   function upload() {
     var data = document.getElementById('input').files[0]
     var file = storj.createFile(bucketId, 'cat.jpg', data)
@@ -259,11 +256,6 @@ download.getBuffer(function (error, buffer) {
 
 // And/or a readable stream for piping fun
 var downStream = download.createReadStream()
-
-downStream.on('data', function (data) {
-  console.log('bytes downloaded:', file.length)
-  doTheThingWithThe(data)
-})
 
 downStream.on("end", function() {
   console.log('Stream over.')
