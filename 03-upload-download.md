@@ -6,6 +6,7 @@ private key. We should also set up a variable for the bucket id, just for
 convenience.
 
 ```javascript
+var privateKey = "SuperSecretKey"
 var encryptionKey = Storj.generateEncryptionKey()
 var storj = new Storj({key: privateKey, encryptionKey: encryptionKey})
 bucketId = 'your_bucket_id'
